@@ -39,7 +39,7 @@
                 
                 <li><my:a href="/shopping/show"><f:message key="navigation.tires"/></my:a></li>
                 <li><my:a href="/services"><f:message key="navigation.service"/></my:a></li>
-                <li><my:a href="/user/list"><f:message key="navigation.customer"/></my:a></li>
+                <li><my:a href="/customer"><f:message key="navigation.customer"/></my:a></li>
                 <li><my:a href="/order/list"><f:message key="navigation.order"/></my:a></li>
                 <%--<li><my:a href="/cart/{id}"><f:message key="navigation.cart"/></my:a></li>--%>
 

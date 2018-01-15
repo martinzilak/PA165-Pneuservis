@@ -12,7 +12,7 @@
 <my:pagetemplate title="${title}">
 <jsp:attribute name="body">
     <h1>New Customer</h1>
-    <form method="get" action="${pageContext.request.contextPath}/customer/create">
+    <form:form method="get" action="${pageContext.request.contextPath}/customer/create">
         <input type="text" name="name" value="name">
         <input type="text" name="surname" value="surname">
         <input type="text" name="city" value="city">
@@ -22,7 +22,7 @@
         <input type="text" name="email" value="email">
         <input type="text" name="phoneNumber" value="phone number">
         <input type="submit" name="submit"><fmt:message key="newCustomer.submit"/></input>
-    </form>
+    </form:form>
 
 </jsp:attribute>
 </my:pagetemplate>
