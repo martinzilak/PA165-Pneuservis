@@ -12,30 +12,26 @@
                modelAttribute="serviceCreate">
         <div class="form-group ${name_error ? 'has-error' : ''}">
             <form:label path="name">Name</form:label>
-            <div class="col-sm-10">
+            
                 <form:input path="name" cssClass="form-control"/>
                 <form:errors path="name"/>
-            </div>
         </div>
         <div class="form-group ${serviceType_error ? 'has-error' : ''}">
             <form:label path="serviceType">Service Type</form:label>
-            <div class="col-sm-10">
-                <form:input path="serviceType" cssClass="form-control"/>
-                <form:errors path="serviceType"/>
-            </div>
-                <select id="s_vehicle" name="s_vehicle">
-                    <option selected></option>
-                    <c:forEach var="item" items="${typeOFServiceEnum}">
-                        <option value="${item}">${item}</option>
-                    </c:forEach>
-                </select>
+                <form:select path="serviceType" cssClass="form-control">                   
+                    <form:option value="TIRECHANGE">Tire change</form:option>
+                    <form:option value="BRAKECALIBRATION">Brake calibration</form:option>
+                    <form:option value="CLEANING">Cleaning</form:option> 
+                    <form:option value="CONVERGANCECHECK">Convergance check</form:option> 
+                    <form:option value="OILCHANGE">Oil change</form:option> 
+                    <form:option value="MUFFLERREPAIR">Muffler repair</form:option> 
+                    <form:option value="EXHAUSTSYSTEMREPAIR">Exhaust system repair</form:option> 
+               </form:select>
         </div>
         <div class="form-group ${price_error ? 'has-error' : ''}">
             <form:label path="price">Price</form:label>
-            <div class="col-sm-10">
                 <form:input path="price" cssClass="form-control"/>
                 <form:errors path="price"/>
-            </div>
         </div>
         <button class="btn btn-primary" type="submit">Create</button>
     </form:form>
