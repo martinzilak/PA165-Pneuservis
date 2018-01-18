@@ -25,7 +25,12 @@
             <tr>
                 <td><c:out value="${service.name}"/></td>
                 <td><c:out value="${service.serviceType}"/></td>
-                <td><c:out value="${service.price}"/></td>
+                <td><c:out value="${service.id}"/></td>
+                    <td><a class="btn btn-default" href="/pa165/order/list/${service.id}">
+                        <span class="glyphicon glyphicon-plus"
+                              aria-hidden="true"></span>
+                        Buy
+                        </a></td>
             </tr>
         </c:forEach>
         </tbody>
