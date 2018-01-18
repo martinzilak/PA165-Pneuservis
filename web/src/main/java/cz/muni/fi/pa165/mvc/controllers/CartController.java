@@ -31,7 +31,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/cart")
-public class CartController {
+public class CartController extends CommonController {
 
     @Autowired
     private OrderFacade orderFacade;

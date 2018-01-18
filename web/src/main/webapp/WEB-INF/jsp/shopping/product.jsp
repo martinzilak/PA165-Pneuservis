@@ -42,9 +42,13 @@
                 <p align="left"><c:out value="season: ${product.tireProperties.season}"/></p>
             </div>
         </div>
+        <form action="${pageContext.request.contextPath}/shopping/product/${product.id}/buy" method="post">
+            <p>
+                <input class="btn btn-lg btn-success" role="button" type="submit" value="Buy" />
+                quantity: <input type="number" name="quantity" min="1" max="${product.onStock}" width="50px" height="20px">
+            </p>
+        </form>
 
-        <p><a class="btn btn-lg btn-success" href="${pageContext.request.contextPath}/shopping/show"
-              role="button">Buy</a> quantity: <input type="number" name="quantity" min="1" max="${product.onStock}" width="50px" height="20px"></p>
 
     </jsp:attribute>
 </my:pagetemplate>

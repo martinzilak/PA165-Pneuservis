@@ -24,7 +24,6 @@
         <tr>
             <th><fmt:message key="order.item"/></th>
             <th><fmt:message key="order.quantity"/></th>
-            <th><fmt:message key="order.price"/></th>
         </tr>
         </thead>
         <tbody>
@@ -39,7 +38,6 @@
                         </c:otherwise>
                     </c:choose>
                     <td><c:out value="${orderItem.quantity}"/></td>
-                    <td><c:out value="${order.getPrice()}"/></td>
                     <%--show quantity * saved price, save it to total price--%>
                 </tr>
             </c:forEach>

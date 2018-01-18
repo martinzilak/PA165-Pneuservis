@@ -1,11 +1,21 @@
 package cz.muni.fi.pa165.mvc.controllers;
 
+import cz.muni.fi.pa165.mvc.config.PasswordEncoderImpl;
 import dto.CustomerDTO;
 import facade.CustomerFacade;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMapper;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.MediaType;
@@ -27,12 +37,15 @@ import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/customer")
-public class CustomerController {
+public class CustomerController extends CommonController{
 
     private final static Logger logger = LoggerFactory.getLogger(CustomerController.class);
 
     @Inject
     private CustomerFacade customerFacade;
+
+    @Inject
+    private InMemoryUserDetailsManager inMemoryUserDetailsManager;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String list(Model model) {
@@ -67,7 +80,7 @@ public class CustomerController {
                          BindingResult result,
                          Model model,
                          RedirectAttributes redirectAttributes,
-                         UriComponentsBuilder uriComponentsBuilder) {
+                         UriComponentsBuilder uriComponentsBuilder) throws Exception {
         if (result.hasErrors()) {
             for (FieldError fe : result.getFieldErrors()) {
                 model.addAttribute(fe.getField() + "_error", true);
@@ -76,6 +89,9 @@ public class CustomerController {
         }
         model.addAttribute("name", customer.getName());
         customerFacade.createCustomer(customer);
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add((GrantedAuthority) () -> "CUSTOMER");
+        inMemoryUserDetailsManager.createUser(new User(customer.getEmail(), "abcf", authorities));
         logger.debug("created customer");
         redirectAttributes.addFlashAttribute("alert_success", "Customer was successfully added.");
         return "redirect:" + uriComponentsBuilder.path("/customer").build().encode().toUriString();

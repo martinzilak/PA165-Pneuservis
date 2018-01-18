@@ -3,22 +3,24 @@ package cz.muni.fi.pa165.mvc.controllers;
 import cz.muni.fi.pa165.pneuservis.backend.enums.SeasonEnum;
 import cz.muni.fi.pa165.pneuservis.backend.enums.SpeedClassEnum;
 import cz.muni.fi.pa165.pneuservis.backend.enums.VehicleTypeEnum;
-import dto.TireDTO;
-import dto.TireManufacturerDTO;
-import dto.TirePropertiesDTO;
+import dto.*;
+import facade.CustomerFacade;
+import facade.OrderFacade;
+import facade.OrderItemFacade;
 import facade.TireFacade;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDateTime;
+import java.util.*;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,13 +33,18 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/shopping")
-public class ShoppingControler {
+public class ShoppingControler extends CommonController {
 
     final static Logger log = LoggerFactory.getLogger(ShoppingControler.class);
 
     @Inject
     private TireFacade tireFacade;
-
+    @Inject
+    private OrderFacade orderFacade;
+    @Inject
+    private CustomerFacade customerFacade;
+    @Inject
+    private OrderItemFacade orderItemFacade;
     /*
     @Inject
     private HttpServletRequest request;
@@ -110,6 +117,31 @@ public class ShoppingControler {
         model.addAttribute("tires", tires);
 
         return "shopping/filter";
+    }
+
+    @RequestMapping(value = "/product/{id}/buy", method = RequestMethod.POST)
+    public String buy(@PathVariable long id, @ModelAttribute("quantity") long items, Model model,  UriComponentsBuilder uriComponentsBuilder) {
+        CustomerDTO customerDTO = user();
+        List<OrderDTO> orders = orderFacade.findAllOrdersOfCustomer(customerDTO);
+        OrderDTO orderDTO;
+        if (orders.size() == 0) {
+            orderDTO = new OrderDTO();
+            orderDTO.setOrderItems(new ArrayList<>());
+            orderDTO.setDate(LocalDateTime.now());
+            orderDTO.setCustomer(customerDTO);
+            orderFacade.create(orderDTO);
+        } else {
+            orderDTO = orders.get(0);
+        }
+        OrderItemDTO orderItemDTO = new OrderItemDTO();
+        orderItemDTO.setService(null);
+        orderItemDTO.setTire(tireFacade.getByID(id));
+        orderItemDTO.setQuantity(items);
+        orderItemFacade.create(orderItemDTO);
+//        List<OrderItemDTO> orderItemDTOS = new ArrayList<>(orderDTO.getOrderItems());
+        orderDTO.getOrderItems().add(orderItemDTO);
+        orderFacade.update(orderDTO);
+        return "redirect:" + uriComponentsBuilder.path("/shopping/show").toUriString();
     }
 
 }

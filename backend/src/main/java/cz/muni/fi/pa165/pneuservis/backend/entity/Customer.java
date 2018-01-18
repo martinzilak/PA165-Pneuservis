@@ -21,6 +21,7 @@ public class Customer {
     private Long id;
 
     @NotNull
+//    @Column(unique = true)
     private String email;
 
     @NotNull
@@ -49,7 +50,7 @@ public class Customer {
     @ElementCollection
     private Set<VehicleTypeEnum> typesOfCar;
 
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
     private Set<Order> orders;
 
     public Customer(){
@@ -185,19 +186,23 @@ public class Customer {
         return result;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Customer{" +
+//                "email='" + email + '\'' +
+//                ", name='" + name + '\'' +
+//                ", surname='" + surname + '\'' +
+//                ", city='" + city + '\'' +
+//                ", street='" + street + '\'' +
+//                ", zipCode='" + zipCode + '\'' +
+//                ", country='" + country + '\'' +
+//                ", phoneNumber='" + phoneNumber + '\'' +
+//                ", vip=" + vip +
+//                ", typesOfCar=" + typesOfCar +
+//                '}';
+//    }
     @Override
     public String toString() {
-        return "Customer{" +
-                "email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", city='" + city + '\'' +
-                ", street='" + street + '\'' +
-                ", zipCode='" + zipCode + '\'' +
-                ", country='" + country + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", vip=" + vip +
-                ", typesOfCar=" + typesOfCar +
-                '}';
+        return "Customer{" + email + "}";
     }
 }

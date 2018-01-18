@@ -42,6 +42,7 @@ public class OrderFacadeImpl implements OrderFacade {
         checkNotNull(order);
         Order o = mappingService.mapTo(order, Order.class);
         orderService.create(o);
+        order.setId(o.getId());
     }
 
     @Override

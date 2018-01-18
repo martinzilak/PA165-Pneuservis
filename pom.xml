@@ -94,4 +94,13 @@
         <module>rest</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>23.6-jre</version>
+
+        </dependency>
+    </dependencies>
+
 </project>

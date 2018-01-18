@@ -28,6 +28,7 @@
             <artifactId>guava</artifactId>
             <version>23.2-jre</version>
             <type>jar</type>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.derby</groupId>

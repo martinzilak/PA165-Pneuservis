@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import cz.muni.fi.pa165.pneuservis.backend.enums.VehicleTypeEnum;
 
 import javax.validation.constraints.NotNull;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -167,11 +168,7 @@ public class CustomerDTO {
 
     @Override
     public int hashCode() {
-        int result = getEmail().hashCode();
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + getSurname().hashCode();
-        result = 31 * result + getPhoneNumber().hashCode();
-        return result;
+        return Objects.hash(getEmail(), getName(), getSurname(), getPhoneNumber());
     }
 
     @Override

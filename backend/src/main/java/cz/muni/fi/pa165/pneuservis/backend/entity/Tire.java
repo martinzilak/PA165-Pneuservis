@@ -29,11 +29,11 @@ public class Tire {
     @NotNull
     private String name;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @NotNull
     private TireManufacturer manufacturer;
      
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @NotNull
     private TireProperties tireProperties; 
     

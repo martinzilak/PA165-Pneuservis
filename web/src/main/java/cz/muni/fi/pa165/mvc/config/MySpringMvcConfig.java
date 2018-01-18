@@ -31,7 +31,7 @@ import javax.validation.Validator;
 
 @EnableWebMvc
 @Configuration
-@Import({TireDataConfig.class, ServiceConfiguration.class})
+@Import({TireDataConfig.class, ServiceConfiguration.class, MySecurityConfig.class, MyAuditListener.class})
 @ComponentScan(basePackageClasses = ShoppingControler.class)
 public class MySpringMvcConfig extends WebMvcConfigurerAdapter {
 

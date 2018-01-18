@@ -27,7 +27,7 @@ import java.util.Set;
  */
 @Controller
 @RequestMapping("/services")
-public class ServiceController {
+public class ServiceController extends CommonController {
 
     final static Logger logger = LoggerFactory.getLogger(ServiceController.class);
 

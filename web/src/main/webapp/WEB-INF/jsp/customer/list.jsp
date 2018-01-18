@@ -23,7 +23,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${customer}" var="customer">
+        <c:forEach items="${customers}" var="customer">
                 <tr>
                     <td><c:out value="${customer.getName()} ${customer.getSurname()}"/> </td>
                     <td><c:out value="${customer.getStreet()} ${customer.getCity()} ${customer.getZipCode()}

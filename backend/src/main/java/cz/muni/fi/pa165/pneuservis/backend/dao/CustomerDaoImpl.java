@@ -37,8 +37,16 @@ public class CustomerDaoImpl implements CustomerDao{
     @Override
     public Customer findByEmail(String email) {
         checkNotNull(email);
-        Customer foundCustomer =  em.createQuery("SELECT c FROM Customer c " +
-                "WHERE c.email = :email", Customer.class).getSingleResult();
+
+        Customer foundCustomer = null;
+        try {
+            foundCustomer = em.createQuery(
+                    "SELECT c FROM Customer c WHERE c.email = :emailv", Customer.class)
+                    .setParameter("emailv", email)
+                    .getSingleResult();
+        } catch (Exception e) {
+            System.err.println(e.toString());
+        }
         return foundCustomer;
     }
 
